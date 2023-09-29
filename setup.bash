@@ -22,9 +22,11 @@ afficher_menu() {
     echo "4. Installer Discord"
     echo "5. Installer IntelliJ (Community)"
     echo "6. Installer PyCharm (Community)"
-    echo "7. Installer Java (OpenJDK 19)"
-    echo "8. Installer Git"
-    echo "9. Exécuter toutes les options"
+    echo "7. Installer VSCode"
+    echo "8. Installer Java (OpenJDK 19)"
+    echo "9. Installer Git"
+    echo "10. Installer MySQL"
+    echo "11. Exécuter toutes les options"
     echo "0. Quitter"
     echo -n "Choisissez une option : "
     
@@ -62,13 +64,18 @@ installer_pycharm() {
 
 # Fonction pour installer Java (OpenJDK 19)
 installer_java() {
-    #apt install openjdk-19-jdk
+    apt install openjdk-19-jdk
     echo "Java (OpenJDK 19) a été installé avec succès."
 }
 
 installer_git() {
     apt install git-all
     echo "Git a été installé avec succès."
+}
+
+installer_my_sql() {
+    apt install mysql-server
+    echo "MySQL a été installé avec succès."
 }
 
 mise_a_jour_des_programmes() {
@@ -89,8 +96,11 @@ executer_toutes_options() {
     installer_discord
     installer_intellij
     installer_pycharm
+    installer_vs_code
     installer_java
     installer_git
+    installer_my_sql
+
     echo "Toutes les options ont été exécutées avec succès."
 
     read -p "Appuyez sur Entrée pour continuer..."
@@ -109,9 +119,11 @@ while true; do
         4) installer_discord ;;
         5) installer_intellij ;;
         6) installer_pycharm ;;
-        7) installer_java ;;
-        8) installer_git ;;
-        9) executer_toutes_options ;;
+        7) installer_vs_code ;;
+        8) installer_java ;;
+        9) installer_git ;;
+        10) installer_my_sql ;;
+        11) executer_toutes_options ;;
         0) exit ;;
         *) echo "Option invalide. Veuillez choisir une option valide." ;;
     esac
