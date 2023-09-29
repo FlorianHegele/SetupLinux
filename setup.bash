@@ -51,7 +51,7 @@ installer_discord() {
 # Fonction pour installer Discord
 installer_vs_code() {
     snap install code --classic
-    echo "Discord a été installé avec succès."
+    echo "VSCode a été installé avec succès."
 }
 
 
@@ -76,6 +76,9 @@ installer_java() {
 installer_git() {
     apt install git-all
     echo "Git a été installé avec succès."
+    echo "Configurer votre compte git avec les commandes suivantes :"
+    echo "git config --global user.name \"username\""
+    echo "git config --global user.email \"username\""
 }
 
 installer_my_sql() {
