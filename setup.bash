@@ -22,11 +22,12 @@ afficher_menu() {
     echo "4. Installer Discord"
     echo "5. Installer IntelliJ (Community)"
     echo "6. Installer PyCharm (Community)"
-    echo "7. Installer VSCode"
-    echo "8. Installer Java (OpenJDK 19)"
-    echo "9. Installer Git"
-    echo "10. Installer MySQL"
-    echo "11. Exécuter toutes les options"
+    echo "7. Installer DataGrip"
+    echo "8 Installer VSCode"
+    echo "9. Installer Java (OpenJDK 19)"
+    echo "1.. Installer Git"
+    echo "11. Installer MySQL"
+    echo "12. Exécuter toutes les options"
     echo "0. Quitter"
     echo -n "Choisissez une option : "
     
@@ -35,6 +36,10 @@ afficher_menu() {
 # Fonction pour activer l'affichage du numéro de semaine
 activer_affichage_semaine() {
     echo "executer la commande suivante (hors du terminal root) -> gsettings set org.gnome.desktop.calendar show-weekdate true"
+}
+
+installer_datagrip() {
+    snap install datagrip --clasic
 }
 
 # Fonction pour installer Discord
@@ -96,6 +101,7 @@ executer_toutes_options() {
     installer_discord
     installer_intellij
     installer_pycharm
+    installer_datagrip
     installer_vs_code
     installer_java
     installer_git
@@ -119,11 +125,12 @@ while true; do
         4) installer_discord ;;
         5) installer_intellij ;;
         6) installer_pycharm ;;
-        7) installer_vs_code ;;
-        8) installer_java ;;
-        9) installer_git ;;
-        10) installer_my_sql ;;
-        11) executer_toutes_options ;;
+        7) installer_datagrip ;;
+        8) installer_vs_code ;;
+        9) installer_java ;;
+        10) installer_git ;;
+        11) installer_my_sql ;;
+        12) executer_toutes_options ;;
         0) exit ;;
         *) echo "Option invalide. Veuillez choisir une option valide." ;;
     esac
