@@ -16,11 +16,9 @@ Ce script Bash facilite la configuration de votre environnement de développemen
 
 ## Utilisation
 
-1. Clonez ce référentiel sur votre système Linux.
-2. Exécutez le script en utilisant la commande suivante : bash setup_dev_environment.sh
-3. Suivez les invites pour sélectionner les options d'installation.
-
-**Remarque :** Assurez-vous d'exécuter ce script en tant qu'utilisateur disposant des privilèges suffisants pour installer des logiciels.
+1. Télécharger la dernière release si vous n'avez Git ou Clonez ce référentiel sur votre système Linux si vous avez Git.
+2. Exécutez le script en utilisant la commande suivante : bash setup_dev.sh
+3. Selectionner les options que vous voulez par le biais de leur numéro.
 
 ## Avis Constructif
 
@@ -29,4 +27,3 @@ Ce script simplifie grandement la configuration de votre environnement de dével
 N'hésitez pas à personnaliser ce script en fonction de vos besoins spécifiques. Vous pouvez ajouter d'autres outils ou personnaliser les options d'installation existantes en fonction de votre flux de travail de développement.
 
 Profitez pleinement de votre expérience de développement !
-
