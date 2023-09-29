@@ -81,6 +81,12 @@ installer_git() {
 installer_my_sql() {
     apt install mysql-server
     echo "MySQL a été installé avec succès."
+    echo "Doc pour l'installation et l'utilisation de MySQL sous linux : https://doc.ubuntu-fr.org/mysql"
+    echo "Se connecter en SUDO : sudo mysql"
+    echo "Créer un compte : CREATE USER 'nom_utilisateur_choisi'@'localhost' IDENTIFIED WITH mysql_native_password BY 'mot_de_passe_solide';"
+    echo "Mettre les privilèges SUDO : GRANT ALL ON *.* TO 'nom_utilisateur'@'localhost';"
+    echo "Reload les privilèges : FLUSH PRIVILEGES;"
+    echo "Se connecter à votre compte : mysql -u nom_utilisateur -p -D votre_base"
 }
 
 mise_a_jour_des_programmes() {
