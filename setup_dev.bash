@@ -39,7 +39,7 @@ activer_affichage_semaine() {
 }
 
 installer_datagrip() {
-    snap install datagrip --clasic
+    snap install datagrip --classic
 }
 
 # Fonction pour installer Discord
