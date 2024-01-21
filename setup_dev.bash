@@ -20,11 +20,11 @@ afficher_menu() {
     echo "2. Mise à niveau des programmes"
     echo "3. Activer l'affichage du numéro de semaine"
     echo "4. Installer Discord"
-    echo "5. Installer IntelliJ (Community)"
-    echo "6. Installer PyCharm (Community)"
+    echo "5. Installer IntelliJ"
+    echo "6. Installer PyCharm"
     echo "7. Installer DataGrip"
     echo "8 Installer VSCode"
-    echo "9. Installer Java (OpenJDK 19)"
+    echo "9. Installer Java (OpenJDK 17)"
     echo "1.. Installer Git"
     echo "11. Installer MySQL"
     echo "12. Exécuter toutes les options"
@@ -58,19 +58,21 @@ installer_vs_code() {
 # Fonction pour installer IntelliJ (Community)
 installer_intellij() {
     snap install intellij-idea-community --classic
-    echo "IntelliJ (Community) a été installé avec succès."
+    snap install intellij-idea-ultimate --classic
+    echo "IntelliJ a été installé avec succès."
 }
 
 # Fonction pour installer PyCharm (Community)
 installer_pycharm() {
     snap install pycharm-community --classic
-    echo "PyCharm (Community) a été installé avec succès."
+    snap install pycharm-professional --classic
+    echo "PyCharm a été installé avec succès."
 }
 
-# Fonction pour installer Java (OpenJDK 19)
+# Fonction pour installer Java (OpenJDK 17)
 installer_java() {
-    apt install openjdk-19-jdk
-    echo "Java (OpenJDK 19) a été installé avec succès."
+    apt install openjdk-17-jdk
+    echo "Java (OpenJDK 17) a été installé avec succès."
 }
 
 installer_git() {
