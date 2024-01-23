@@ -17,29 +17,53 @@ afficher_menu() {
     clear
     echo "Menu de Configuration pour les Nouvelles Installations Ubuntu"
     echo "1. Mise à jour des programmes"
-    echo "2. Mise à niveau des programmes"
-    echo "3. Activer l'affichage du numéro de semaine"
-    echo "4. Installer Discord"
-    echo "5. Installer IntelliJ"
-    echo "6. Installer PyCharm"
-    echo "7. Installer DataGrip"
-    echo "8 Installer VSCode"
-    echo "9. Installer Java (OpenJDK 17)"
-    echo "1.. Installer Git"
-    echo "11. Installer MySQL"
-    echo "12. Exécuter toutes les options"
+    echo "2. Installer snap"
+    echo "3. Installer Git"
+    echo "4. Installer Java (17)"
+    echo "5. Installer Discord"
+    echo "6. Installer VSCode"
+    echo "7. Installer IntellIj"
+    echo "8 Installer PyCharm"
+    echo "9. Installer DataGrip"
+    echo "10. Installer MySQL"
+    echo "11. Installer Python"
+    echo "12. Installer Outils de Développement en C"
+    echo "13. Installer Docker"
+    echo "14. Installer VirtualBox"
+    echo "15. Installer Node.js"
+    echo "16. Installer CLion"
+    echo "17. Afficher des commandes utiles"
+    echo "18. Exécuter toutes les options"
     echo "0. Quitter"
     echo -n "Choisissez une option : "
-    
+}
+
+mise_a_jour_des_programmes() {
+    apt update -y
+    apt upgrade -y
+    apt autoremove -y
+    echo "La mise à jour des programmes a été effectué avec succès."
+}
+
+installer_snap() {
+    apt install snapd -y
+    snap install snap-store
+    echo "La mise à niveau des programmes a été effectué avec succès."
 }
 
 # Fonction pour activer l'affichage du numéro de semaine
-activer_affichage_semaine() {
+afficher_utils() {
     echo "executer la commande suivante (hors du terminal root) -> gsettings set org.gnome.desktop.calendar show-weekdate true"
 }
 
 installer_datagrip() {
     snap install datagrip --classic
+    echo "DataGrip a été installé avec succès."
+}
+
+installer_clion() {
+    snap install clion --classic
+    echo "CLion a été installé avec succès."
 }
 
 # Fonction pour installer Discord
@@ -94,29 +118,70 @@ installer_my_sql() {
     echo "Se connecter à votre compte : mysql -u nom_utilisateur -p -D votre_base"
 }
 
-mise_a_jour_des_programmes() {
-    apt update
-    echo "La mise à jour des programmes a été effectué avec succès."
+installer_python() {
+    apt install python3 python3-pip -y
+    echo "Python et pip ont été installés avec succès."
 }
 
-mise_a_niveau_des_programmes() {
-    apt upgrade
-    echo "La mise à niveau des programmes a été effectué avec succès."
+installer_developpement_c() {
+    apt install build-essential -y
+    echo "Les outils de développement en C ont été installés avec succès."
 }
 
-# Fonction pour exécuter toutes les options
+installer_docker() {
+    # Vérifier si la clé Docker est déjà installée
+    if [ ! -f /etc/apt/keyrings/docker.gpg ]; then
+        # Si elle n'existe pas, alors l'ajouter
+        apt install ca-certificates curl gnupg -y
+        install -m 0755 -d /etc/apt/keyrings
+        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+        chmod a+r /etc/apt/keyrings/docker.gpg
+    fi
+
+    # Add the repository to Apt sources:
+    echo \
+    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+    $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+    tee /etc/apt/sources.list.d/docker.list > /dev/null
+    apt update -y
+
+    apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+    
+    systemctl start docker
+
+    # add user to docker group
+    gpasswd -a $USER docker
+}
+
+installer_virtualbox() {
+    apt install virtualbox -y
+    echo "VirtualBox a été installé avec succès."
+}
+
+installer_nodejs() {
+    apt install nodejs npm -y
+    echo "Node.js et npm ont été installés avec succès."
+}
+
 executer_toutes_options() {
     mise_a_jour_des_programmes
-    mise_a_niveau_des_programmes
-    activer_affichage_semaine
+    installer_snap
+    installer_git
+    installer_java
     installer_discord
+    installer_vs_code
     installer_intellij
     installer_pycharm
     installer_datagrip
-    installer_vs_code
-    installer_java
-    installer_git
     installer_my_sql
+    installer_python
+    installer_developpement_c
+    installer_docker
+    installer_virtualbox
+    installer_nodejs
+    installer_clion
+    mise_a_jour_des_programmes
+    afficher_utils
 
     echo "Toutes les options ont été exécutées avec succès."
 
@@ -131,17 +196,23 @@ while true; do
     read option
     case $option in
         1) mise_a_jour_des_programmes ;;
-        2) mise_a_niveau_des_programmes ;;
-        3) activer_affichage_semaine ;;
-        4) installer_discord ;;
-        5) installer_intellij ;;
-        6) installer_pycharm ;;
-        7) installer_datagrip ;;
-        8) installer_vs_code ;;
-        9) installer_java ;;
-        10) installer_git ;;
-        11) installer_my_sql ;;
-        12) executer_toutes_options ;;
+        2) installer_snap ;;
+        3) installer_git;;
+        4) installer_java ;;
+        5) installer_discord ;;
+        6) installer_vs_code ;;
+        7) installer_intellij ;;
+        8) installer_pycharm ;;
+        9) installer_datagrip;;
+        10) installer_my_sql;;
+        11) installer_python ;;
+        12) installer_developpement_c ;;
+        13) installer_docker ;;
+        14) installer_virtualbox ;;
+        15) installer_nodejs ;;
+        16) installer_clion ;;
+        17) afficher_utils ;;
+        18) executer_toutes_options ;;
         0) exit ;;
         *) echo "Option invalide. Veuillez choisir une option valide." ;;
     esac
