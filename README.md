@@ -4,8 +4,8 @@ Ce script Bash facilite la configuration de votre environnement de développemen
 
 ## Utilisation
 
-1. Télécharger la dernière release si vous n'avez Git ou Clonez ce référentiel sur votre système Linux si vous avez Git.
-2. Exécutez le script en utilisant la commande suivante : bash setup_dev.sh
+1. Télécharger la dernière release si vous n'avez pas Git ou Clonez ce référentiel.
+2. Exécutez le script en utilisant la commande suivante : bash setup_dev.sh ou chmod a+x setup_dev.sh && ./setup_dev.sh
 3. Selectionner les options que vous voulez par le biais de leur numéro.
 
 ## Avis Constructif
