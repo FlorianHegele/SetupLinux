@@ -32,8 +32,9 @@ afficher_menu() {
     echo "14. Installer VirtualBox"
     echo "15. Installer Node.js"
     echo "16. Installer CLion"
-    echo "17. Afficher des commandes utiles"
-    echo "18. Exécuter toutes les options"
+    echo "17. Installer FileZilla"
+    echo "18. Afficher des commandes utiles"
+    echo "19. Exécuter toutes les options"
     echo "0. Quitter"
     echo -n "Choisissez une option : "
 }
@@ -53,7 +54,14 @@ installer_snap() {
 
 # Fonction pour activer l'affichage du numéro de semaine
 afficher_utils() {
+    clear
     echo "executer la commande suivante (hors du terminal root) -> gsettings set org.gnome.desktop.calendar show-weekdate true"
+    echo "générer des clefs ssh de préférence : ssh-keygen -t ed25519 -C xxx -f ~/.ssh/xxx_ed25519"
+    echo "envoyer la clef ssh-copy-id -i ~/.ssh/xxx_ed25519.pub user@adress"
+    echo "fix : dual boot horaire (non root) -> timedatectl set-local-rtc 1"
+    echo "fix : la carte graphique n'est pas utilisé -> apt install libnvidia-egl-wayland1"
+    echo "fix : docker empeche certains connexion (utiliser l'ip 127.0.1.1 de préférence) : https://stackoverflow.com/questions/52225493/change-default-docker0-bridge-ip-address/52270884#52270884"
+    echo "fix : sauvegarder les passphrases automatiquement avec 'AddKeysToAgent yes' dans le fichier config du dossier .ssh"
 }
 
 installer_datagrip() {
@@ -163,6 +171,11 @@ installer_nodejs() {
     echo "Node.js et npm ont été installés avec succès."
 }
 
+installer_fillezilla() {
+    apt install filezilla -y
+    echo "FileZilla a été installé avec succès."
+}
+
 executer_toutes_options() {
     mise_a_jour_des_programmes
     installer_snap
@@ -180,6 +193,7 @@ executer_toutes_options() {
     installer_virtualbox
     installer_nodejs
     installer_clion
+    installer_fillezilla
     mise_a_jour_des_programmes
     afficher_utils
 
@@ -211,8 +225,9 @@ while true; do
         14) installer_virtualbox ;;
         15) installer_nodejs ;;
         16) installer_clion ;;
-        17) afficher_utils ;;
-        18) executer_toutes_options ;;
+        17) installer_fillezilla ;;
+        18) afficher_utils ;;
+        19) executer_toutes_options ;;
         0) exit ;;
         *) echo "Option invalide. Veuillez choisir une option valide." ;;
     esac
