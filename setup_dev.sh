@@ -5,11 +5,10 @@ if [ $EUID != 0 ]; then
     exit $?
 fi
 
-# Récupérer le nom de l'utilisateur qui a exécuté le script
 if [ -z "$SUDO_USER" ]; then
-    current_user="$USER"  # Utilisateur standard
+    current_user="$USER"
 else
-    current_user="$SUDO_USER"  # Utilisateur avec sudo
+    current_user="$SUDO_USER"
 fi
 
 # Fonction pour afficher le menu
