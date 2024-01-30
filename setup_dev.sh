@@ -1,22 +1,84 @@
 #!/bin/bash
 
-if [ $EUID != 0 ]; then
-    sudo bash "$0" "$@"
+# Vérifier si neofetch est installé
+if ! command -v neofetch &> /dev/null; then
+
+    if [ $EUID != 0 ]; then
+        sudo bash "$0" "$USER" "$@"
+        exit $?
+    fi
+
+    echo "neofetch n'est pas installé. Installation en cours..."
+    apt-get update
+    apt-get install neofetch
+    echo "neofetch installé avec succès. Redémarrage du script en cours..."
+    
+    # Redémarrer le script en tant qu'utilisateur normal
+    echo "Redémarrer le script !!!"
+    read -p "Appuyer sur entrer"
     exit $?
 fi
 
-if [ -z "$SUDO_USER" ]; then
-    current_user="$USER"
-else
-    current_user="$SUDO_USER"
+# Fonction pour obtenir le code de distribution
+get_distribution_code() {
+    # Si le script est exécuté en tant qu'utilisateur root avec un argument passé en commande
+    if [ $EUID = 0 ] && [ "$#" -ge 1 ]; then
+        echo "$1"
+    else
+        # Utiliser neofetch pour obtenir les informations du système
+        system_info=$(neofetch --stdout)
+
+        # Vérifier et renvoyer le code de la distribution
+        if echo "$system_info" | grep -q "Kubuntu"; then
+            echo 1  # Kubuntu
+        elif echo "$system_info" | grep -q "Ubuntu"; then
+            echo 0  # Ubuntu
+        elif echo "$system_info" | grep -q "Debian"; then
+            echo 2  # Debian
+        else
+            echo 3  # Autre
+        fi
+    fi
+}
+
+# Détecter la distribution
+distribution_code=$(get_distribution_code "$@")
+case $distribution_code in
+    0|1|2) #do nothing
+        ;;
+    3)
+        echo "Cette distribution n'est pas valide pour ce script !"
+        read -p "Appuyer sur entrer"
+        exit $?
+        ;;
+    *)
+        echo "Cette distribution n'est pas valide pour ce script !"
+        read -p "Appuyer sur entrer"
+        exit $?
+        ;;
+esac
+
+# Si le script est exécuté en tant qu'utilisateur normal, relancer le script en tant qu'utilisateur root avec la distribution comme paramètre
+if [ $EUID != 0 ]; then
+    sudo bash "$0" "$@" "$distribution_code"
+    exit $?
 fi
+
+# Récupérer le nom de l'utilisateur qui a exécuté le script
+if [ -z "$SUDO_USER" ]; then
+    current_user="$USER"  # Utilisateur standard
+else
+    current_user="$SUDO_USER"  # Utilisateur avec sudo
+fi
+
+
 
 # Fonction pour afficher le menu
 afficher_menu() {
     clear
-    echo "Menu de Configuration pour les Nouvelles Installations Ubuntu"
+    echo "Menu de Configuration pour les Nouvelles Installations Debian/Ubuntu/Kubuntu"
     echo "1. Mise à jour des programmes"
-    echo "2. Installer snap"
+    echo "2. Installer snap et flatpak"
     echo "3. Installer Git"
     echo "4. Installer Java (17)"
     echo "5. Installer Discord"
@@ -38,6 +100,16 @@ afficher_menu() {
     echo -n "Choisissez une option : "
 }
 
+check_install_package() {
+    # Vérifier si le paquet est installé
+    if dpkg -l | grep -q $1; then
+        return 0  # True
+    else
+        return 1  # False
+    fi
+}
+
+
 mise_a_jour_des_programmes() {
     apt update -y
     apt upgrade -y
@@ -45,10 +117,29 @@ mise_a_jour_des_programmes() {
     echo "La mise à jour des programmes a été effectué avec succès."
 }
 
-installer_snap() {
+installer_snap_flatpak() {
     apt install snapd -y
-    snap install snap-store
-    echo "La mise à niveau des programmes a été effectué avec succès."
+
+    apt install flatpak -y
+
+    case $distribution_code in
+        0|2)
+            apt install gnome-software-plugin-flatpak -y
+            ;;
+        1)
+            apt install plasma-discover-backend-flatpak -y
+            ;;
+    esac
+
+    if flatpak remotes | grep -q "flathub"; then
+        echo "La mise à niveau des programmes a été effectué avec succès."
+    else
+        flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+        echo "La mise à niveau des programmes a été effectué avec succès. Redémarrage dans 5 secondes !"
+        sleep 5
+        reboot
+    fi
+
 }
 
 # Fonction pour activer l'affichage du numéro de semaine
@@ -75,7 +166,7 @@ installer_clion() {
 
 # Fonction pour installer Discord
 installer_discord() {
-    snap install discord 
+    flatpak install flathub com.discordapp.Discord
     echo "Discord a été installé avec succès."
 }
 
@@ -175,9 +266,10 @@ installer_fillezilla() {
     echo "FileZilla a été installé avec succès."
 }
 
+
 executer_toutes_options() {
     mise_a_jour_des_programmes
-    installer_snap
+    installer_snap_flatpak
     installer_git
     installer_java
     installer_discord
@@ -209,7 +301,7 @@ while true; do
     read option
     case $option in
         1) mise_a_jour_des_programmes ;;
-        2) installer_snap ;;
+        2) installer_snap_flatpak ;;
         3) installer_git;;
         4) installer_java ;;
         5) installer_discord ;;
