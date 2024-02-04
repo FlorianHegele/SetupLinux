@@ -114,6 +114,7 @@ mise_a_jour_des_programmes() {
     apt update -y
     apt upgrade -y
     apt autoremove -y
+
     echo "La mise à jour des programmes a été effectué avec succès."
 }
 
@@ -152,6 +153,8 @@ afficher_utils() {
     echo "fix : la carte graphique n'est pas utilisé -> apt install libnvidia-egl-wayland1"
     echo "fix : docker empeche certains connexion (utiliser l'ip 127.0.1.1 de préférence) : https://stackoverflow.com/questions/52225493/change-default-docker0-bridge-ip-address/52270884#52270884"
     echo "fix : sauvegarder les passphrases automatiquement avec 'AddKeysToAgent yes' dans le fichier config du dossier .ssh"
+    echo "fix : multplie screen freshrate https://www.reddit.com/r/linux/comments/yaatyo/psa_x11_does_support_mixed_refresh_rate_monitors/"
+    echo "fix : touche des medias (start-pause, skip, ...) https://www.addictivetips.com/ubuntu-linux-tips/fix-media-keys-not-working-on-linux/"
 }
 
 installer_datagrip() {
