@@ -169,7 +169,29 @@ installer_clion() {
 
 # Fonction pour installer Discord
 installer_discord() {
-    flatpak install flathub com.discordapp.Discord
+    #flatpak install flathub com.discordapp.Discord
+
+    local github_repo_url="https://github.com/FlorianHegele/AutoUpdateDiscord/"
+    local temp_dir=$(mktemp -d)
+    
+    # Cloner le dépôt GitHub
+    git clone "$github_repo_url" "$temp_dir" --depth=1
+    
+    # Copier les fichiers vers les emplacements appropriés
+    mkdir -p /opt/auto_scripts/
+    cp $temp_dir/update_discord.sh /opt/auto_scripts/
+    chmod +x /opt/auto_scripts/update_discord.sh
+    
+    # Copier le fichier de service
+    cp $temp_dir/update-discord.service /etc/systemd/system/
+    
+    # Activer et démarrer le service avec systemctl
+    systemctl enable update-discord.service
+    systemctl restart update-discord.service
+    
+    # Nettoyer
+    rm -rf $temp_dir
+
     echo "Discord a été installé avec succès."
 }
 
