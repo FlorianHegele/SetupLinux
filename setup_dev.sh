@@ -155,6 +155,7 @@ afficher_utils() {
     echo "fix : sauvegarder les passphrases automatiquement avec 'AddKeysToAgent yes' dans le fichier config du dossier .ssh"
     echo "fix : multplie screen freshrate https://www.reddit.com/r/linux/comments/yaatyo/psa_x11_does_support_mixed_refresh_rate_monitors/"
     echo "fix : touche des medias (start-pause, skip, ...) https://www.addictivetips.com/ubuntu-linux-tips/fix-media-keys-not-working-on-linux/"
+    echo "fix : activer le secure boot -> sudo apt install shim-signed grub-efi-amd64-signed && sudo grub-install --uefi-secure-boot"
 }
 
 installer_datagrip() {
